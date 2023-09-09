@@ -22,13 +22,16 @@ class MyWidget(QMainWindow):
         self.button.clicked.connect(self.parse)
 
     def parse(self):
-        nlp = spacy.load('en_core_web_lg')
-        doc = nlp(self.raw.text())
+        print(self.raw.toPlainText())
+        nlp = spacy.load("en_core_web_sm") # опытом принта я выяснила, что проблема в этой строке и недоумеваю
+        print(self.raw.toPlainText())
+        doc = nlp(self.raw.toPlainText())
         l = []
         for token in doc:
             l.append(f'{token.i:2}. {token.text:15} POS: {token.pos_:6} SyntR: {token.dep_:9} Head: {token.head.text}')
         self.text = QLabel(l, self)
         self.text.adjustSize()
+        self.setDockWidget(self.text)
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
