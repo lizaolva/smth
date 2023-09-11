@@ -1,3 +1,4 @@
+pyqt5
 import sys, spacy
 from PyQt5.QtWidgets import QWidget, QApplication, QVBoxLayout, QLabel, QLineEdit, QPushButton, QMainWindow, QTextEdit, QDockWidget, QTableWidget, QTableWidgetItem
 from PyQt5.QtCore import Qt
@@ -18,14 +19,9 @@ class MyWidget(QMainWindow):
 
         self.button = QPushButton('распарсить', self)
         self.button.setGeometry(390, 250, 111, 51)
-        """self.button.move(70, 150)
-        self.button.setFixedWidth(200)"""
         self.button.clicked.connect(self.parse)
 
     def parse(self):
-        print(self.raw.toPlainText())
-         # опытом принта я выяснила, что проблема в этой строке и недоумеваю
-        print(self.raw.toPlainText())
         doc = self.nlp(self.raw.toPlainText())
         l = []
         for token in doc:
@@ -43,8 +39,6 @@ class MyWidget(QMainWindow):
             self.table.setItem(l.index(token) + 1, 2, QTableWidgetItem(token[2] if token[2] else None))
             self.table.setItem(l.index(token) + 1, 3, QTableWidgetItem(token[3] if token[3] else None))
 
-        #self.table.adjustSize()
-
         tablewidget = QDockWidget(self)
         tablewidget.setWidget(self.table)
         self.addDockWidget(Qt.BottomDockWidgetArea, tablewidget)
@@ -54,5 +48,3 @@ if __name__ == '__main__':
     myWidget = MyWidget()
     myWidget.show()
     sys.exit(app.exec_())
-
-# сделать список списков из всех токенов и 
